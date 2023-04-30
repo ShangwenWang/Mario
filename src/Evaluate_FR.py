@@ -1,6 +1,7 @@
 '''
 Evaluator for the field-relevant method which can't find same field in proximate classes.
 '''
+import argparse
 import json
 import os
 import pickle
@@ -401,10 +402,14 @@ def main(FRMethods, fieldDict, fieldMethodMapping, probs, targetReposPath, baseR
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-threshold', type=int)
+    opt = parser.parse_args()
+    
     fieldDictPath = '../Data/fieldDict.pkl'
     fieldMethodMappingPath = '../Data/fieldMethodMappingDict.pkl'
     testFieldReMethodsPath = '../Data/testFieldRelevantMethods.pkl'
-    taragetReposPath = '../JavaRepos_all/java-large/target'
+    targetReposPath = '../JavaRepos_all/java-large/target'
     baseReposPath = '../JavaRepos_all/java-large/training'
     probabilityPath = '../Data/probability.json'
     verbPath = '../Data/filtered_verb_vocabulary.json'
@@ -414,8 +419,9 @@ if __name__ == '__main__':
     ASTDict = {}
     clsInBase = set()
     clsInTest = set()
-    threshold = 0.7
     FieldFinderThreshold = 0.2
+    threshold = opt.threshold
+  
     outputPath = '../Data/FR_PredRes' + str(threshold)+'.json'
 
     fasttextModel = FastText.load(fasttextModelPath)
@@ -427,4 +433,4 @@ if __name__ == '__main__':
         fieldDict = pickle.load(f_3)
         fieldMethodMapping = pickle.load(f_4)
 
-    main(FRMethods, fieldDict, fieldMethodMapping, probs, taragetReposPath, baseReposPath, outputPath, threshold, fasttextModel, FieldFinderThreshold)
+    main(FRMethods, fieldDict, fieldMethodMapping, probs, targetReposPath, baseReposPath, outputPath, threshold, fasttextModel, FieldFinderThreshold)

@@ -127,8 +127,6 @@ def forward_model(opt, model, startTime, epoch, test=False):
 def main():
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-src_data', type=str, default="./data/english.txt")
-    parser.add_argument('-trg_data', type=str, default="./data/french.txt")
     parser.add_argument('-method_data', type=str, default="./data/Training.json")
     parser.add_argument('-test_data', type=str, default="./data/Test.json")
     parser.add_argument('-src_lang', type=str, default="en_core_web_sm")
